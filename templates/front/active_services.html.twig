@@ -17,9 +17,10 @@
             </thead>
             <tbody>
     {% for service in services %}
+
             <tr>
                 <td>{{ service.service.name }}</td>
-                <td>{{ "now"|date_modify("+ %s day"|format(service.service.expirationDate))|date("m-d-Y") }}</td>
+                <td>{{ service.serviceStartDate|date_modify("+ %s day"|format(service.service.expirationDate))|date("m-d-Y") }}</td>
                 <td><a href="{% if service.service.id == 1  %}{{ path('add_adv') }} {% else %} {{ path('add_banner') }} {% endif %}">Valdyti paslauga</a></td>
 
             </tr>

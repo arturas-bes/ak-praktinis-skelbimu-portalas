@@ -22,7 +22,7 @@ class OrderServicesController extends AbstractController
      */
     public function index(Request $request)
     {
-       // $this->checkForActiveServices();
+
         $payment = new Payment();
         $form = $this->createForm(PaymentType::class, $payment);
         $form->handleRequest($request);
@@ -32,92 +32,99 @@ class OrderServicesController extends AbstractController
             $payment->setUser($user);
 
             $paymentMethod = $em->getRepository(PaymentMethod::class)
-            ->find($request->request->get('payment')['paymentMethod']);
+                ->find($request->request->get('payment')['paymentMethod']);
             $payment->setPaymentMethod($paymentMethod);
 
             $services = $request->request->get('payment')['service'];
+            $date = new \DateTime();
             $count = 0;
             foreach ($services as $service) {
-                $serviceObj = $em->getRepository(Service::class)->find($service);
-                $currentUserService = $em->getRepository(UserService::class)
-                    ->findOneBy(['user' => $this->getUser(), 'service' => $serviceObj]);
                 $count++;
-                if (!$this->checkForActiveServices($currentUserService)) {
                 $userService = new UserService();
-                    $date = new \DateTime();
-                    $date->modify('+ 30 days');
-                    $userService->setServiceStartDate($date);
-                } else {
-                        $userService = $currentUserService;
-                        $date = $userService->getServiceStartDate();
-                        $date->modify('+ 30 days');
-                        $userService->setServiceStartDate($date);
-                }
-                    $userService->setUser($user);
-                    $userService->setIsActive(true);
-                    $userService->setService($serviceObj);
-
-                    $em->persist($userService);
+                $userService->setUser($user);
+                $userService->setIsActive(true);
+                $userService->setService($em->getRepository(Service::class)->find($service));
+                $userService->setServiceStartDate($date);
+                $em->persist($userService);
             }
             $em->flush();
-
             $userServices = $em->getRepository(UserService::class)->getLastIds($count);
             $payment->setUserServices($userServices);
-
             $em->persist($payment);
             $em->flush();
             return $this->redirectToRoute('order_confirmation');
         }
+
+
         return $this->render('front/order_services.html.twig', [
             'services' => $this->findAllServices(),
             'payments' => $this->findAllPaymentMethods(),
+            'userService' => $this->getAllUserServices(),
             'form' => $form->createView(),
         ]);
     }
-    private function checkForActiveServices($userService)
-    {
-        if ($userService == true && $userService->getIsActive() == true) {
 
-            return true;
-        }
-        return false;
+public
+function getAllUserServices()
+{
+    $em = $this->getDoctrine()->getManager();
+    $repo = $em->getRepository(UserService::class);
+    $result = $repo->findBy(['user' => $this->getUser(), 'isActive' => true]);
+    $res = array();
+    foreach ($result as $item)
+        $res [] = $item->getService()->getId();
+
+    return $res;
+}
+
+private
+function checkForActiveServices($userService)
+{
+    if ($userService == true && $userService->getIsActive() == true) {
+
+        return true;
     }
+    return false;
+}
 
-    /**
-     * @return object[]
-     */
-    private function findAllServices()
-    {
-        $em = $this->getDoctrine()->getManager();
-        return $em->getRepository(Service::class)->findAll();
-    }
+/**
+ * @return object[]
+ */
+private
+function findAllServices()
+{
+    $em = $this->getDoctrine()->getManager();
+    return $em->getRepository(Service::class)->findAll();
+}
 
-    /**
-     * @return object[]
-     */
-    private function findAllPaymentMethods()
-    {
-        $em = $this->getDoctrine()->getManager();
+/**
+ * @return object[]
+ */
+private
+function findAllPaymentMethods()
+{
+    $em = $this->getDoctrine()->getManager();
 
-        return $em->getRepository(PaymentMethod::class)->findAll();
-    }
+    return $em->getRepository(PaymentMethod::class)->findAll();
+}
 
-    /**
-     * @Route("/order/confirmation", name="order_confirmation")
-     */
-    public function orderConfirmation()
-    {
-        $em = $this->getDoctrine();
-        $payment = $em->getRepository(Payment::class)->getLastPayment();
+/**
+ * @Route("/order/confirmation", name="order_confirmation")
+ */
+public
+function orderConfirmation()
+{
+    $em = $this->getDoctrine();
+    $payment = $em->getRepository(Payment::class)->getLastPayment();
 
-        $userServices = $em->
-        getRepository(UserService::class)
-            ->getOrderedServices($payment->getUserServices());
+    $userServices = $em->
+    getRepository(UserService::class)
+        ->getOrderedServices($payment->getUserServices());
 
-            return $this->render('front/order_confirmation.html.twig', [
-                'payments' => $payment,
-                'services' => $userServices,
-            ]);
-    }
+    return $this->render('front/order_confirmation.html.twig', [
+        'payments' => $payment,
+        'services' => $userServices,
+    ]);
+}
 
 }

@@ -156,26 +156,31 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../bigbox" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/templates/front" />
-      <recent name="$PROJECT_DIR$/templates/front/includes" />
-      <recent name="$PROJECT_DIR$/templates/admin" />
-      <recent name="$PROJECT_DIR$/assets/css" />
-      <recent name="$PROJECT_DIR$/assets" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/templates/front" />
       <recent name="$PROJECT_DIR$/src/Twig" />
       <recent name="$PROJECT_DIR$/src/DataFixtures" />
       <recent name="$PROJECT_DIR$/templates/admin/includes" />
       <recent name="$PROJECT_DIR$/templates/admin" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates/front" />
+      <recent name="$PROJECT_DIR$/templates/front/includes" />
+      <recent name="$PROJECT_DIR$/templates/admin" />
+      <recent name="$PROJECT_DIR$/assets/css" />
+      <recent name="$PROJECT_DIR$/assets" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -212,7 +217,7 @@
       <workItem from="1574665908120" duration="28746000" />
       <workItem from="1576508171009" duration="3975000" />
       <workItem from="1576659683121" duration="17531000" />
-      <workItem from="1576756294433" duration="382000" />
+      <workItem from="1576756294433" duration="7518000" />
     </task>
     <servers />
   </component>
@@ -233,10 +238,14 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="2696" y="297" width="424" height="484" key="FileChooserDialogImpl" timestamp="1576739141022">
+    <state x="2696" y="297" width="424" height="484" key="FileChooserDialogImpl" timestamp="1576763562203">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2696" y="297" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576739141022" />
+    <state x="2696" y="297" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576763562203" />
+    <state x="2087" y="98" width="1653" height="882" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1576761907122">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2087" y="98" width="1653" height="882" key="com.intellij.history.integration.ui.views.FileHistoryDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576761907122" />
     <state x="2516" y="253" width="868" height="596" key="find.popup" timestamp="1576680782346">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>

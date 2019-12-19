@@ -27,6 +27,7 @@
                     {% if services %}
 
                         {% for service in services %}
+                            {% if service.id not in userService%}
                     <!-- Animated Checkbox -->
                     <div class="checkbox-animated">
                         <input id="checkbox_animated_{{ service.id }}" class="services" name="payment[service][{{ service.id }}]" type="checkbox" value="{{ service.id }}">
@@ -36,8 +37,17 @@
                             {{ service.name }}
                         </label>
                     </div>
+                            {% else %}
+                                <div class="checkbox-animated">
+                                    <input disabled id="checkbox_animated_{{ service.id }}" class="services" name="payment[service][{{ service.id }}]" type="checkbox" value="{{ service.id }}">
+                                    <label for="checkbox_animated_{{ service.id }}">
+                                        <span class="check"></span>
+                                        <span class="box"></span>
+                                        {{ service.name }}|<small><strong>paslauga aktyvi</strong></small>
+                                    </label>
+                                </div>
+                            {% endif %}
                         {% endfor %}
-
                     {% endif %}
                     <input type="button" name="Toliau" class="next action-button" value="Toliau" />
                 </fieldset>
@@ -156,8 +166,18 @@
         });
 
         $(".submit").click(function(e){
+            var arr = [];
+            $('input[type=checkbox]').each(function () {
+                if (this.checked) {
+                   arr.push(this.val())
+                }
+            });
+            if (!arr.length > 0) {
+                alert('Prasome pasirinkti paslauga');
+                return false;
+            }
+            $('#msform').submit();
 
-           $('#msform').submit();
         })
     </script>
 

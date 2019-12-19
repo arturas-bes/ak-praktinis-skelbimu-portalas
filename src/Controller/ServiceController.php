@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Service;
+use App\Entity\UserService;
 use App\Form\ServiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,8 +36,17 @@ class ServiceController extends AbstractController
         return $this->render('admin/add_service.html.twig',[
             'form' => $form->createView(),
             'services' => $this->getAllServices(),
+            'userService' => $this->getAllUserServices()
         ]);
     }
+    public function getAllUserServices()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo =  $em->getRepository(UserService::class);
+
+        return $repo->findBy(['user' => $this->getUser()]);
+    }
+
     public function getAllServices()
     {
         $em = $this->getDoctrine()->getManager();
