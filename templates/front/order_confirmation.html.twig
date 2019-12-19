@@ -1,0 +1,31 @@
+{% extends 'front/base.html.twig' %}
+
+
+{% block main %}
+<div class="col-md-12">
+    {% if app.user %}
+    <ul class="list-group">
+        <li style="background: #BD5D38; border: none; color: white" class="list-group-item active"> <h3 style="color: white; font-weight: bold"class="fs-subtitle">Jūsų užsakymas įvygdytas</h3></li>
+        <li class="list-group-item bold">Užsakovas</li>
+
+            <li class="list-group-item ">{{app.user.firstName}} {{app.user.lastName}}</li>
+
+
+        <li class="list-group-item bold">Mokėjimo būdas</li>
+        <li class="list-group-item">{{ payments.paymentMethod.name }}</li>
+        {% set sum = 0 %}
+
+        {% for service in services %}
+        <li style="background: #BD5D38; border: none; color: white"class="list-group-item active ">Užsakytos paslaugos:</li>
+            <li class="list-group-item bold">{{ service.service.name }}:</li>
+            <li class="list-group-item">Kaina: {{ service.service.price }} EUR</li>
+            {% set now = "now" %}
+            <li class="list-group-item">Galioja iki: {{ now|date_modify("+ %s day"|format(service.service.expirationDate))|date("m-d-Y") }}</li>
+            {% set sum =  sum + service.service.price %}
+        {% endfor %}
+
+        <li style="background: #BD5D38; border: none; color: white"class="list-group-item active bold ">Viso: {{sum}} EUR</li>
+    </ul>
+    {% endif %}
+</div>
+    {% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'front/base.html.twig' %}
+
+
+{% block main %}
+<div class="col-md-12">
+{% if adv %}
+                <h1 style="font-size: 22px;" class="my-4">{{ adv.title }}</h1>
+
+        <div  class="col-md-12 blog-post">
+                <div  class="card mb-4 mb-20">
+
+                    <img  style="width: 650px; margin: 0 auto; " class="card-img-top" src="{{ absolute_url(asset(adv.imagePath)) }}" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">{{  adv.subject|raw }}</p>
+
+                    </div>
+                    <div class="card-footer text-muted">
+                        <small>paskelbta  {{ adv.createdAt|date('Y-m-d') }}</small></a>
+                    </div>
+                    <a  href="{{ path("advertisments") }}" class="btn btn-outline-secondary m-3">Atgal</a>
+                </div>
+        </div>
+</div>
+    {% endif %}
+    {% endblock %}

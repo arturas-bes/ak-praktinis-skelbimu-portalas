@@ -1,0 +1,30 @@
+{% extends 'front/base.html.twig' %}
+
+
+{% block main %}
+
+    <h2 style="color:  #BD5D38; text-align: center; width: 100%; line-height: 3; font-weight: bold"class="fs-subtitle">Paslaugu valdymas</h2>
+
+    {% if services %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Paslaugos pavadinimas</th>
+                <th scope="col">Aktyvi iki</th>
+                <th scope="col">Paslaugos valdymas</th>
+
+            </tr>
+            </thead>
+            <tbody>
+    {% for service in services %}
+            <tr>
+                <td>{{ service.service.name }}</td>
+                <td>{{ "now"|date_modify("+ %s day"|format(service.service.expirationDate))|date("m-d-Y") }}</td>
+                <td><a href="{% if service.service.id == 1  %}{{ path('add_adv') }} {% else %} {{ path('add_banner') }} {% endif %}">Valdyti paslauga</a></td>
+
+            </tr>
+    {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    {% endblock %}

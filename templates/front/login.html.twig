@@ -1,0 +1,39 @@
+{% extends 'front/base.html.twig' %}
+
+{% block main %}
+{% if error %}
+<div class="col-md-8 order-md-1">
+    <div class="alert alert-danger">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+    </div>
+</div>
+{% endif %}
+    <div class="col-md-12 order-md-1">
+
+<form method="POST" action="{{ path('login') }}" class="form-signin">
+    <h4 class="mb-3 spalva-text-orn">Prisijungti</h4>
+
+    <div class="mb-3">
+    <label for="inputEmail" class="sr-only">El paštas</label>
+    <input name="_email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    </div>
+    <div class="mb-3">
+    <label for="inputPassword" class="sr-only">Slaptažodis</label>
+    <input name="_password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    </div>
+    <div class="mb-3">
+    <div class="checkbox mb-3">
+        <label>
+            <input name="_remember_me" type="checkbox" > Prisiminti mane
+        </label>
+    </div>
+    </div>
+    <div class="mb-3">
+    <button style="background: #BD5D38; color: white; border: none" class="btn btn-lg btn btn-dark btn-block " type="submit">Prisijungti</button>
+    <p class="mt-5 mb-3 text-muted"> <a href="{{ path('home') }}"> Į pagrindinį</a> | <a href="{{ path('register') }}">Neturite paskyros? Registruotis</a></p>
+
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+    </div>
+</form>
+    </div>
+{% endblock %}

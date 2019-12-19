@@ -1,0 +1,76 @@
+{% extends 'admin/base.html.twig' %}
+{% block main %}
+    <div class="col-md-12 order-md-1">
+        <h4 class="mb-3">Registruotis</h4>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="user_name">Vardas</label>
+                {{ form_widget(form.firstName) }}
+                <div class="invalid-feedback">
+                    Valid first name is required.
+                    {{ form_errors(form.firstName) }}
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="user_last_name">Pavardė</label>
+                {{ form_widget(form.lastName) }}
+                <div class="invalid-feedback">
+                    Valid last name is required.
+                    {{ form_errors(form.lastName) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="user_email">El paštas</label>
+            {{ form_widget(form.email) }}
+            <div class="invalid-feedback">
+                Please enter a valid email address.
+                {{ form_errors(form.email) }}
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="user_email">Apie autoriu</label>
+
+            {{ form_widget(form.author_description) }}
+
+        </div>
+        <div class="mb-3">
+            <label for="user_password_first">Slaptažodis</label>
+            {{ form_widget(form.password.first) }}
+            <div class="invalid-feedback">
+                Please enter a valid password.
+                {{ form_errors(form.password.first) }}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="user_password_second">Patvirtinti slaptažodį</label>
+            {{ form_widget(form.password.second) }}
+            <div class="invalid-feedback">
+                Please enter a valid password confirmation.
+                {{ form_errors(form.password.second) }}
+            </div>
+        </div>
+
+        <hr class="mb-4">
+        <button type="submit" class="btn btn btn-dark btn-lg btn-block" role="button">Keisti profili</button>
+
+        {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script>
+        $('.custom-file-input').on('change', function(event) {
+            var inputFile = event.currentTarget;
+            $(inputFile).parent()
+                .find('.custom-file-label')
+                .html(inputFile.files[0].name);
+        });
+    </script>
+{% endblock %}

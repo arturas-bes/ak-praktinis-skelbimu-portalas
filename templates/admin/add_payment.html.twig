@@ -1,0 +1,70 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block main %}
+    <div class="row">
+
+        <h1 class="m-4">Pridėti mokejimo buda</h1>
+    </div>
+
+    {% include 'admin/includes/payment_form.html.twig' %}
+
+    <div class="row">
+
+            {% if payments %}
+            <div style="margin: 0 auto" class="col col-md-10">
+                  <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Pavadinimas</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                <th scope="col">Redaguoti mokejimo buda</th>
+                <th scope="col">Ištrinti mokejimo buda</th>
+                {% endif %}
+            </tr>
+            </thead>
+                {% for payment in payments %}
+
+                    <tbody>
+                    <tr>
+                        <td>
+                            {{ payment.id }}
+                        </td>
+                        <td>
+                            {{ payment.name }}
+                        </td>
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <td>
+                            <a href="{{ path("edit_payment", {'id': payment.id}) }}">Redaguoti</a>
+                        </td>
+                        <td>
+                            <a href="{{ path("delete_payment", {'id': payment.id}) }}">Ištrinti</a>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    </tbody>
+                {% endfor %}
+                {% else %}
+                <h2>Nėra jokių mokejimo budu.</h2>
+                    </table>
+                    </div>
+            {% endif %}
+
+
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script>
+        $('.custom-file-input').on('change', function(event) {
+            var inputFile = event.currentTarget;
+            $(inputFile).parent()
+                .find('.custom-file-label')
+                .html(inputFile.files[0].name);
+        });
+    </script>
+{% endblock %}

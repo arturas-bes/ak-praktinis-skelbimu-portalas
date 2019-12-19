@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<!-- Navigation -->
+<div style="margin-top: 100px" class="container">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+        <a class="navbar-brand js-scroll-trigger" href="{{ path('home') }}">
+            <span class="d-block d-lg-none">Clarence Taylor</span>
+            <span class="d-none d-lg-block">
+        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{{ absolute_url('/uploads/logo.png') }}" alt="profilio nuotrauka">
+      </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a  class="nav-link js-scroll-trigger" href="{{ path('home') }}">Į pagrindinį</a>
+                </li>
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a style="color: white" class="nav-link js-scroll-trigger" href="{{ path('logout') }}">Atsijungti</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a style="color: white" class="nav-link js-scroll-trigger" href="{{ path('order_services') }}">Užsakyti paslaugas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="color: white" class="nav-link js-scroll-trigger" href="{{ path('active_services') }}">Valdyti paslaugas</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a style="color: white" class="nav-link js-scroll-trigger" href="{{ path('login') }}">Prisijungti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{{ path('advertisments') }}">Skelbimai</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#">Baneriai</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+{% block main %}{% endblock %}
+
+    </div>
+</div>
+<!-- Footer -->
+{% block footer %}
+<footer style="position: fixed; bottom: 0; width: 100%" class=" spalva-bg-ornpy-2 bg-dark">
+        <p class="m-0  spalva-bg-orn text-center text-white">Alytaus kolegija &copy; Artūras Bespalovas 2019</p>
+</footer>
+{% endblock %}
+
+    <!-- Menu Toggle Script -->
+    {% block javascripts %}
+       {{ parent() }}
+        <script>
+            window.$ = window.jQuery = $;
+            $("#menu-toggle").click(function(e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

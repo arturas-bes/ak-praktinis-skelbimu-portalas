@@ -1,0 +1,12 @@
+    {{ form_start(form) }}
+    <label for="blog_post_title">Paslaugos pavadinimas</label>
+    {{ form_widget(form.name,{'attr': {'class': 'form-control', 'placeholder': 'Pavadinimas'}, 'id': 'validationServer01' }) }}
+    <br>
+    <label for="blog_post_title">Paslaugos terminas (dienomis)</label>
+    {{ form_widget(form.expirationDate,{'attr': {'class': 'form-control', 'placeholder': 'Terminas'}, 'id': 'validationServer01' }) }}
+    <br>
+    <label for="blog_post_title">Paslaugos kaina (EUR)</label>
+    {{ form_widget(form.price,{'attr': {'class': 'form-control', 'placeholder': 'Kaina'}, 'id': 'validationServer01' }) }}
+    <br>
+    <button class="btn btn-primary mt-3 mb-5" type="submit">Pridėti</button>
+    {{ form_end(form) }}

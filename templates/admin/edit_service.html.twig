@@ -1,0 +1,24 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block main %}
+    <div class="row">
+
+        <h1 class="m-4">Redaguoti paslauga</h1>
+    </div>
+
+    {% include 'admin/includes/service_form.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script>
+        $('.custom-file-input').on('change', function(event) {
+            var inputFile = event.currentTarget;
+            $(inputFile).parent()
+                .find('.custom-file-label')
+                .html(inputFile.files[0].name);
+        });
+    </script>
+{% endblock %}

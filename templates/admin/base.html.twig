@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ak kursinis darbas blogas">
+    <meta name="author" content="Arturas Bespalovas">
+
+    <title>AK kursinis darbas - Blogas</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
+</head>
+<body>
+
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Valdymo skydas</div>
+        <div class="list-group list-group-flush">
+            <a href="{{ path('admin') }}" class="list-group-item list-group-item-action bg-light">Į pagrindinį</a>
+{#            <a href="{{ path('add_blog_post') }}" class="list-group-item list-group-item-action bg-light">Pridėti straipsnį</a>#}
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('add_service') }}" class="list-group-item list-group-item-action bg-light">Pridėti paslauga</a>
+                <a href="{{ path('add_payment') }}" class="list-group-item list-group-item-action bg-light">Pridėti mokejimo buda</a>
+                <a href="{{ path('users') }}" class="list-group-item list-group-item-action bg-light">Visi naudotojai</a>
+            {% endif %}
+        </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <button class="btn btn-primary" id="menu-toggle">Šoninis meniu</button>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('home') }}">Į pagrindinį blogą <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ app.user.firstName }} {{ app.user.lastName }} profilis
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('edit_profile') }}">Keisti profilį</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('logout') }}">Atsijungti</a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            {% block main %}
+                <h1 class="m-4">Visi straipsniai</h1>
+                {% if blog_posts %}
+                <div class="row">
+                    <div style="margin: 0 auto" class="col col-md-10">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Foto</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Pavadinimas</th>
+                            <th scope="col">Turinys</th>
+                            <th scope="col">Autorius</th>
+                            <th scope="col">Sukurta</th>
+                            <th scope="col">Atnaujinta</th>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <th scope="col">Redaguoti straipsnį</th>
+                            <th scope="col">Ištrinti straipsnį</th>
+                            {% endif %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for post in blog_posts %}
+
+                                <tr>
+                                    <td><img width= "150" src="{{ absolute_url(asset(post.imagePath)) }}" alt="blogpostImg"> </td>
+                                    <td>{{ post.id }}</td>
+                                    <td>{{ post.title|length > 20 ? post.title|slice(0, 20) ~ '...' : post.title }}</td>
+                                    <td>  {{ post.subject|length > 40 ? post.subject|slice(0, 40) ~ '...' : post.subject }} </td>
+                                    <td>{{ post.author.firstName }} {{ post.author.lastName }}</td>
+                                    <td>{{ post.createdAt|date('Y-m-d') }} </td>
+                                    <td>{{ post.updatedAt|date('Y-m-d') }} </td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <td><a href="{{ path("edit_adv", {'id': post.id}) }}">Redaguoti</a> </td>
+                                        <td><a href="{{ path("delete_adv", {'id': post.id}) }}">Ištrinti</a> </td>
+                                    {% endif %}
+                                </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <h2>Nėra jokių straipsnių.</h2>
+                        </div>
+                    {% endif %}
+                </div>
+
+        {% endblock %}
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+<!-- Menu Toggle Script -->
+{% block javascripts %}
+    <script src="{{ asset('assets/vendor/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.js') }}"></script>
+<script>
+    window.$ = window.jQuery = $;
+
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+</script>
+{% endblock %}
+</body>
+</html>
